@@ -37,54 +37,60 @@ def generate_mini_check(data: dict) -> str:
     if "error" in data:
         return "Fehler beim Laden der Website."
 
-    prompt = f"""
+        prompt = f"""
 Du bist Experte für Website-Optimierung für lokale Unternehmen in Deutschland.
 
-Analysiere diese Website:
+Analysiere diese Website-Daten:
 
 URL: {data["url"]}
 Title: {data["title"]}
 Meta Description: {data["meta_description"]}
 H1: {data["h1_tags"]}
-Text: {data["text_excerpt"]}
+Textauszug: {data["text_excerpt"]}
 
-EDu bist Experte für Website-Optimierung für lokale Unternehmen in Deutschland.
-
-Analysiere die folgende Website und erstelle einen kurzen Mini-Check für unsere Agentur.
+Erstelle einen kurzen Mini-Check für unsere Website-Optimierungs-Agentur.
 
 WICHTIG:
-- Schreibe ALLES auf Deutsch
+- Schreibe alles auf Deutsch
 - Einfach und verständlich
 - Kurz und prägnant
 - Keine Fachbegriffe ohne Erklärung
+- Nicht übertreiben und nichts erfinden
+- Wenn etwas aus den Daten nicht sicher erkennbar ist, formuliere vorsichtig
 
 Struktur:
 
-1. Kurze Ersteinschätzung (max 2 Sätze)
-2. 2 positive Punkte
-3. 3 konkrete Schwachstellen
-4. 3 konkrete Verbesserungsvorschläge
-5. Kurze SEO- und Conversion-Einschätzung (max 2 Sätze)
+1. Kurze Ersteinschätzung
+Maximal 2 Sätze.
 
-6. Outreach-E-Mail:
+2. 2 positive Punkte
+Kurz und konkret.
+
+3. 3 konkrete Schwachstellen
+Einfach erklären, warum das problematisch sein kann.
+
+4. 3 konkrete Verbesserungsvorschläge
+Direkt umsetzbar und verständlich.
+
+5. Kurze SEO- und Conversion-Einschätzung
+Maximal 2 Sätze.
+
+6. Outreach-E-Mail
 
 Erstelle eine kurze Erstkontakt-Mail an den Website-Besitzer.
 
-HARTE REGELN:
-- Maximal 65 Wörter
+HARTE REGELN FÜR DIE E-MAIL:
+- Maximal 75 Wörter
 - Beginne exakt mit: "Hallo liebes [Firmenname]-Team,"
 - Verwende einfache, natürliche Sprache
 - Klinge wie ein echter Mensch
-- KEIN Marketing-Blabla
-- KEIN "Klicken Sie hier"
-- KEINE Floskeln wie "wir bieten Ihnen"
+- Kein Marketing-Blabla
+- Kein "Klicken Sie hier"
+- Keine Floskeln wie "wir bieten Ihnen"
 - Erwähne genau 1 konkrete Auffälligkeit aus der Analyse
-- Ende mit einer lockeren Frage
+- Stelle am Ende eine konkrete Frage, die leicht mit Ja beantwortet werden kann
+- Die Frage soll ein kostenloses Angebot enthalten, z. B. Mini-Check oder kurze Analyse
 - Ziel: Interesse wecken und Antwort bekommen
-
-Die E-Mail soll allgemein funktionieren und NICHT auf ein spezifisches Unternehmen zugeschnitten sein.
-Beispiel-Stil:
-"wir haben uns Ihre Website kurz angeschaut..."
 """
 
     response = requests.post(
