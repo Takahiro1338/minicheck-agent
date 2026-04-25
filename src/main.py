@@ -1,9 +1,5 @@
-import os
 import requests
 from bs4 import BeautifulSoup
-from dotenv import load_dotenv
-
-load_dotenv()
 
 
 def fetch_website_data(url: str) -> dict:
@@ -65,12 +61,17 @@ Wichtig:
 - freundlich formuliert
 """
 
-    response = client.responses.create(
-        model="gpt-5.5",
-        input=prompt
+    response = requests.post(
+        "http://localhost:11434/api/generate",
+        json={
+            "model": "llama3",
+            "prompt": prompt,
+            "stream": False
+        },
+        timeout=120
     )
 
-    return response.output_text
+    return response.json()["response"]
 
 
 if __name__ == "__main__":
