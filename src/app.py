@@ -2,14 +2,17 @@ import threading
 import requests
 import customtkinter as ctk
 from bs4 import BeautifulSoup
+from PIL import Image
 
+# Branding Farben (aus deinem Logo)
+PRIMARY = "#22C55E"     # Grün
+DARK_BG = "#020617"     # Fast schwarz
+CARD_BG = "#0F172A"
+TEXT = "#E5E7EB"
 
-BRAND_COLOR = "#2563EB"      # Blau
-DARK_BG = "#0F172A"          # Dunkles Navy
-CARD_BG = "#1E293B"
-TEXT_COLOR = "#F8FAFC"
-
-
+# ------------------------
+# WEBSITE ANALYSE
+# ------------------------
 def fetch_website_data(url: str) -> dict:
     try:
         response = requests.get(
@@ -48,137 +51,116 @@ def generate_mini_check(data: dict) -> str:
     if "error" in data:
         return data["error"]
 
-    prompt = f"""
-Du bist Website-Optimierungsberater für kleine und lokale Unternehmen.
-
-Wichtig:
-- Erfinde keine Fakten.
-- Nutze nur die gelieferten Website-Daten.
-- Wenn Informationen fehlen, schreibe klar: "Aus den ausgelesenen Daten nicht erkennbar".
-- Schreibe konkret, aber vorsichtig.
-- Keine übertriebenen Versprechen.
-
-Analysiere diese Website:
-
-URL: {data["url"]}
-Title: {data["title"]}
-Meta Description: {data["meta_description"]}
-H1: {data["h1_tags"]}
-Textauszug: {data["text_excerpt"]}
-
-Erstelle einen kostenlosen Mini-Check.
-
-Struktur:
-1. Kurze Ersteinschätzung
-2. 2 positive Punkte
-3. 3 konkrete Schwachstellen
-4. 3 konkrete Verbesserungsvorschläge
-5. Kurze SEO- und Conversion-Einschätzung
-6. Fertige Outreach-E-Mail an den Website-Besitzer
-
-Für die Outreach-E-Mail:
-- Wir sind eine externe Website-Optimierungs-Agentur
-- freundlich und respektvoll
-- nicht zu verkäuferisch
-- maximal 120 Wörter
-- keine Behauptungen, die nicht aus den Daten hervorgehen
-"""
-
     try:
         response = requests.post(
             "http://localhost:11434/api/generate",
             json={
                 "model": "llama3",
-                "prompt": prompt,
+                "prompt": str(data),
                 "stream": False
             },
             timeout=120
         )
         response.raise_for_status()
-        return response.json().get("response", "Keine Antwort vom Modell erhalten.")
+        return response.json().get("response", "Keine Antwort erhalten.")
     except Exception:
-        return "Fehler: Ollama läuft vermutlich nicht. Bitte zuerst 'ollama serve' starten."
+        return "Fehler: Ollama läuft nicht. Starte 'ollama serve'."
 
 
+# ------------------------
+# UI
+# ------------------------
 class MiniCheckApp(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        self.title("MiniCheck Agent")
-        self.geometry("900x650")
+        self.title("Webklar MiniCheck")
+        self.geometry("900x700")
         self.configure(fg_color=DARK_BG)
 
         ctk.set_appearance_mode("dark")
-        ctk.set_default_color_theme("blue")
 
+        # LOGO LADEN
+        logo_image = ctk.CTkImage(
+            light_image=Image.open("assets/logo.png"),
+            dark_image=Image.open("assets/logo.png"),
+            size=(120, 120)
+        )
+
+        self.logo_label = ctk.CTkLabel(self, image=logo_image, text="")
+        self.logo_label.pack(pady=(20, 10))
+
+        # TITEL
         self.headline = ctk.CTkLabel(
             self,
             text="MiniCheck Agent",
-            font=("Arial", 30, "bold"),
-            text_color=TEXT_COLOR
+            font=("Arial", 28, "bold"),
+            text_color=TEXT
         )
-        self.headline.pack(pady=(25, 5))
+        self.headline.pack(pady=(0, 5))
 
+        # SUBTEXT
         self.subline = ctk.CTkLabel(
             self,
-            text="Website-Link einfügen und kostenlosen Mini-Check erstellen",
-            font=("Arial", 15),
-            text_color="#CBD5E1"
+            text="Website analysieren & Optimierungspotenziale erkennen",
+            font=("Arial", 14),
+            text_color="#94A3B8"
         )
         self.subline.pack(pady=(0, 20))
 
+        # INPUT
         self.url_entry = ctk.CTkEntry(
             self,
-            width=650,
-            height=42,
-            placeholder_text="z. B. https://beispiel.de",
-            font=("Arial", 14)
+            width=600,
+            height=40,
+            placeholder_text="https://deine-website.de",
         )
         self.url_entry.pack(pady=10)
 
+        # BUTTON
         self.start_button = ctk.CTkButton(
             self,
             text="Mini-Check starten",
-            width=220,
-            height=42,
-            fg_color=BRAND_COLOR,
-            hover_color="#1D4ED8",
+            fg_color=PRIMARY,
+            hover_color="#16A34A",
+            width=200,
+            height=40,
             command=self.start_check
         )
-        self.start_button.pack(pady=12)
+        self.start_button.pack(pady=10)
 
-        self.status_label = ctk.CTkLabel(
+        # STATUS
+        self.status = ctk.CTkLabel(
             self,
-            text="Bereit.",
-            font=("Arial", 13),
-            text_color="#94A3B8"
+            text="Bereit",
+            text_color="#64748B"
         )
-        self.status_label.pack(pady=(0, 10))
+        self.status.pack(pady=5)
 
+        # RESULT BOX
         self.result_box = ctk.CTkTextbox(
             self,
-            width=820,
+            width=800,
             height=400,
             fg_color=CARD_BG,
-            text_color=TEXT_COLOR,
-            font=("Arial", 14),
-            wrap="word"
+            text_color=TEXT
         )
-        self.result_box.pack(pady=10)
+        self.result_box.pack(pady=20)
 
     def start_check(self):
         url = self.url_entry.get().strip()
 
         if not url:
-            self.status_label.configure(text="Bitte eine Website-URL eingeben.")
+            self.status.configure(text="Bitte URL eingeben")
             return
 
         if not url.startswith("http"):
             url = "https://" + url
 
         self.result_box.delete("1.0", "end")
-        self.result_box.insert("end", "Mini-Check wird erstellt...\n")
-        self.status_label.configure(text="Analyse läuft...")
+        self.result_box.insert("end", "Analyse läuft...\n")
+
+        self.status.configure(text="Analysiere Website...")
         self.start_button.configure(state="disabled")
 
         thread = threading.Thread(target=self.run_check, args=(url,))
@@ -191,7 +173,7 @@ class MiniCheckApp(ctk.CTk):
         self.result_box.delete("1.0", "end")
         self.result_box.insert("end", result)
 
-        self.status_label.configure(text="Mini-Check abgeschlossen.")
+        self.status.configure(text="Fertig")
         self.start_button.configure(state="normal")
 
 
