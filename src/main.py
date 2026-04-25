@@ -78,7 +78,6 @@ Wichtig für die E-Mail:
 
     return response.json()["response"]
 
-
 if __name__ == "__main__":
     url = input("Website eingeben: ")
 
@@ -90,3 +89,12 @@ if __name__ == "__main__":
 
     print("\n--- MINI CHECK ---\n")
     print(result)
+
+    filename = data["url"].replace("https://", "").replace("http://", "")
+    filename = filename.replace("/", "_").replace(".", "_")
+    filename = f"mini_check_{filename}.txt"
+
+    with open(filename, "w", encoding="utf-8") as file:
+        file.write(result)
+
+    print(f"\n✅ Mini-Check gespeichert als: {filename}")
