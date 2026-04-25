@@ -48,18 +48,23 @@ Meta Description: {data["meta_description"]}
 H1: {data["h1_tags"]}
 Text: {data["text_excerpt"]}
 
-Erstelle:
-- 2 positive Punkte
-- 3 Schwächen
-- 3 Verbesserungen
-- kurze SEO Einschätzung
-- fertige E-Mail an den Kunden
+Erstelle einen Mini-Check für unsere Agentur, die Website-Optimierung anbietet.
 
-Wichtig:
-- verständlich
-- nicht zu technisch
-- freundlich formuliert
-"""
+Ausgabe bitte in genau dieser Struktur:
+
+1. Kurze Ersteinschätzung
+2. 2 positive Punkte
+3. 3 konkrete Schwachstellen
+4. 3 konkrete Verbesserungsvorschläge
+5. Kurze SEO- und Conversion-Einschätzung
+6. Fertige Outreach-E-Mail an den Website-Besitzer
+
+Wichtig für die E-Mail:
+- Wir sind NICHT das Unternehmen der Website
+- Wir schreiben als externe Website-Optimierungs-Agentur
+- Ziel ist ein kostenloser Mini-Check oder Erstgespräch
+- freundlich, respektvoll und nicht zu verkäuferisch
+- maximal 120 Wörter
 
     response = requests.post(
         "http://localhost:11434/api/generate",
