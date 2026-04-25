@@ -33,6 +33,10 @@ def fetch_website_data(url: str) -> dict:
     }
 
 
+def generate_mini_check(data: dict) -> str:
+    if "error" in data:
+        return data["error"]
+
     prompt = f"""
 Du bist Experte für Website-Optimierung für lokale Unternehmen.
 
@@ -88,12 +92,10 @@ if __name__ == "__main__":
     print("\n--- MINI CHECK ---\n")
     print(result)
 
-    # Dateiname erstellen
     filename = data["url"].replace("https://", "").replace("http://", "")
     filename = filename.replace("/", "_").replace(".", "_")
     filename = f"mini_check_{filename}.txt"
 
-    # Datei speichern
     with open(filename, "w", encoding="utf-8") as file:
         file.write(result)
 
