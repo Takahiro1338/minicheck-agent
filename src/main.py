@@ -65,11 +65,22 @@ Struktur:
 5. Kurze SEO- und Conversion-Einschätzung (max 2 Sätze)
 
 6. Outreach-E-Mail:
-- max 80 Wörter
-- locker & freundlich
-- KEIN Agentur-Blabla
-- Ziel: Interesse wecken
-- Call-to-Action: kostenloser Mini-Check anbieten
+
+Erstelle eine kurze, persönliche E-Mail an den Website-Besitzer.
+
+HARTE REGELN (müssen eingehalten werden):
+- Beginne IMMER mit: "Hallo liebes [Firmenname]-Team,"
+- Schreibe maximal 80 Wörter
+- Verwende einfache, natürliche Sprache
+- Klinge wie ein echter Mensch, nicht wie Werbung
+- KEIN "Klicken Sie hier"
+- KEIN Marketing-Blabla
+- KEINE Floskeln wie "Wir bieten Ihnen"
+- Erwähne GENAU 1 konkrete Auffälligkeit aus der Analyse
+- Ziel: Interesse wecken, nicht verkaufen
+
+Beispiel-Stil:
+"wir haben uns Ihre Website kurz angeschaut..."
 """
 
     response = requests.post(
@@ -84,18 +95,6 @@ Struktur:
 
     return response.json()["response"]
 
-    
-    response = requests.post(
-        "http://localhost:11434/api/generate",
-        json={
-            "model": "llama3",
-            "prompt": prompt,
-            "stream": False
-        },
-        timeout=120
-    )
-
-    return response.json()["response"]
 
 if __name__ == "__main__":
     url = input("Website eingeben: ")
@@ -109,10 +108,12 @@ if __name__ == "__main__":
     print("\n--- MINI CHECK ---\n")
     print(result)
 
+    # Dateiname erstellen
     filename = data["url"].replace("https://", "").replace("http://", "")
     filename = filename.replace("/", "_").replace(".", "_")
     filename = f"mini_check_{filename}.txt"
 
+    # Datei speichern
     with open(filename, "w", encoding="utf-8") as file:
         file.write(result)
 
