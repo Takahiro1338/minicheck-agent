@@ -37,8 +37,8 @@ def generate_mini_check(data: dict) -> str:
     if "error" in data:
         return "Fehler beim Laden der Website."
 
-    prompt = f"""
-Du bist Experte für Website-Optimierung für lokale Unternehmen.
+   prompt = f"""
+Du bist Experte für Website-Optimierung für lokale Unternehmen in Deutschland.
 
 Analysiere diese Website:
 
@@ -48,23 +48,30 @@ Meta Description: {data["meta_description"]}
 H1: {data["h1_tags"]}
 Text: {data["text_excerpt"]}
 
-Erstelle einen Mini-Check für unsere Agentur, die Website-Optimierung anbietet.
+Erstelle einen Mini-Check für unsere Agentur.
 
-Ausgabe bitte in genau dieser Struktur:
+WICHTIG:
+- Schreibe ALLES auf Deutsch
+- Einfach und verständlich
+- Keine Fachbegriffe ohne Erklärung
+- Kurz und prägnant
 
-1. Kurze Ersteinschätzung
+Struktur:
+
+1. Kurze Ersteinschätzung (max 2 Sätze)
 2. 2 positive Punkte
-3. 3 konkrete Schwachstellen
+3. 3 konkrete Schwachstellen (klar und einfach erklärt)
 4. 3 konkrete Verbesserungsvorschläge
-5. Kurze SEO- und Conversion-Einschätzung
-6. Fertige Outreach-E-Mail an den Website-Besitzer
+5. Kurze SEO- und Conversion-Einschätzung (max 2 Sätze)
 
-Wichtig für die E-Mail:
-- Wir sind NICHT das Unternehmen der Website
-- Wir schreiben als externe Website-Optimierungs-Agentur
-- Ziel ist ein kostenloser Mini-Check oder Erstgespräch
-- freundlich, respektvoll und nicht zu verkäuferisch
-- maximal 120 Wörter
+6. Outreach-E-Mail:
+- max 80 Wörter
+- locker & freundlich
+- personalisiert (z. B. „wir haben uns Ihre Website angeschaut“)
+- KEIN Agentur-Blabla
+- Ziel: Interesse wecken, nicht verkaufen
+- Call-to-Action: kostenloser Mini-Check / kurze Analyse anbieten
+
 """
 
     response = requests.post(
