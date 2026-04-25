@@ -33,64 +33,34 @@ def fetch_website_data(url: str) -> dict:
     }
 
 
-def generate_mini_check(data: dict) -> str:
-    if "error" in data:
-        return "Fehler beim Laden der Website."
+    prompt = f"""
+Du bist Experte für Website-Optimierung für lokale Unternehmen.
 
-        prompt = f"""
-Du bist Experte für Website-Optimierung für lokale Unternehmen in Deutschland.
-
-Analysiere diese Website-Daten:
+Analysiere diese Website:
 
 URL: {data["url"]}
 Title: {data["title"]}
 Meta Description: {data["meta_description"]}
 H1: {data["h1_tags"]}
-Textauszug: {data["text_excerpt"]}
+Text: {data["text_excerpt"]}
 
-Erstelle einen kurzen Mini-Check für unsere Website-Optimierungs-Agentur.
+Erstelle einen Mini-Check für unsere Agentur, die Website-Optimierung anbietet.
 
-WICHTIG:
-- Schreibe alles auf Deutsch
-- Einfach und verständlich
-- Kurz und prägnant
-- Keine Fachbegriffe ohne Erklärung
-- Nicht übertreiben und nichts erfinden
-- Wenn etwas aus den Daten nicht sicher erkennbar ist, formuliere vorsichtig
-
-Struktur:
+Ausgabe bitte in genau dieser Struktur:
 
 1. Kurze Ersteinschätzung
-Maximal 2 Sätze.
-
 2. 2 positive Punkte
-Kurz und konkret.
-
 3. 3 konkrete Schwachstellen
-Einfach erklären, warum das problematisch sein kann.
-
 4. 3 konkrete Verbesserungsvorschläge
-Direkt umsetzbar und verständlich.
-
 5. Kurze SEO- und Conversion-Einschätzung
-Maximal 2 Sätze.
+6. Fertige Outreach-E-Mail an den Website-Besitzer
 
-6. Outreach-E-Mail
-
-Erstelle eine kurze Erstkontakt-Mail an den Website-Besitzer.
-
-HARTE REGELN FÜR DIE E-MAIL:
-- Maximal 75 Wörter
-- Beginne exakt mit: "Hallo liebes [Firmenname]-Team,"
-- Verwende einfache, natürliche Sprache
-- Klinge wie ein echter Mensch
-- Kein Marketing-Blabla
-- Kein "Klicken Sie hier"
-- Keine Floskeln wie "wir bieten Ihnen"
-- Erwähne genau 1 konkrete Auffälligkeit aus der Analyse
-- Stelle am Ende eine konkrete Frage, die leicht mit Ja beantwortet werden kann
-- Die Frage soll ein kostenloses Angebot enthalten, z. B. Mini-Check oder kurze Analyse
-- Ziel: Interesse wecken und Antwort bekommen
+Wichtig für die E-Mail:
+- Wir sind NICHT das Unternehmen der Website
+- Wir schreiben als externe Website-Optimierungs-Agentur
+- Ziel ist ein kostenloser Mini-Check oder Erstgespräch
+- freundlich, respektvoll und nicht zu verkäuferisch
+- maximal 120 Wörter
 """
 
     response = requests.post(
