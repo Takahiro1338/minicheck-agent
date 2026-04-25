@@ -48,13 +48,15 @@ Meta Description: {data["meta_description"]}
 H1: {data["h1_tags"]}
 Text: {data["text_excerpt"]}
 
-Erstelle einen Mini-Check für unsere Agentur.
+EDu bist Experte für Website-Optimierung für lokale Unternehmen in Deutschland.
+
+Analysiere die folgende Website und erstelle einen kurzen Mini-Check für unsere Agentur.
 
 WICHTIG:
 - Schreibe ALLES auf Deutsch
 - Einfach und verständlich
-- Keine Fachbegriffe ohne Erklärung
 - Kurz und prägnant
+- Keine Fachbegriffe ohne Erklärung
 
 Struktur:
 
@@ -66,19 +68,21 @@ Struktur:
 
 6. Outreach-E-Mail:
 
-Erstelle eine kurze, persönliche E-Mail an den Website-Besitzer.
+Erstelle eine kurze Erstkontakt-Mail an den Website-Besitzer.
 
-HARTE REGELN (müssen eingehalten werden):
-- Beginne IMMER mit: "Hallo liebes [Firmenname]-Team,"
-- Schreibe maximal 80 Wörter
+HARTE REGELN:
+- Maximal 65 Wörter
+- Beginne exakt mit: "Hallo liebes [Firmenname]-Team,"
 - Verwende einfache, natürliche Sprache
-- Klinge wie ein echter Mensch, nicht wie Werbung
-- KEIN "Klicken Sie hier"
+- Klinge wie ein echter Mensch
 - KEIN Marketing-Blabla
-- KEINE Floskeln wie "Wir bieten Ihnen"
-- Erwähne GENAU 1 konkrete Auffälligkeit aus der Analyse
-- Ziel: Interesse wecken, nicht verkaufen
+- KEIN "Klicken Sie hier"
+- KEINE Floskeln wie "wir bieten Ihnen"
+- Erwähne genau 1 konkrete Auffälligkeit aus der Analyse
+- Ende mit einer lockeren Frage
+- Ziel: Interesse wecken und Antwort bekommen
 
+Die E-Mail soll allgemein funktionieren und NICHT auf ein spezifisches Unternehmen zugeschnitten sein.
 Beispiel-Stil:
 "wir haben uns Ihre Website kurz angeschaut..."
 """
