@@ -37,7 +37,7 @@ def generate_mini_check(data: dict) -> str:
     if "error" in data:
         return "Fehler beim Laden der Website."
 
-   prompt = f"""
+    prompt = f"""
 Du bist Experte für Website-Optimierung für lokale Unternehmen in Deutschland.
 
 Analysiere diese Website:
@@ -60,20 +60,31 @@ Struktur:
 
 1. Kurze Ersteinschätzung (max 2 Sätze)
 2. 2 positive Punkte
-3. 3 konkrete Schwachstellen (klar und einfach erklärt)
+3. 3 konkrete Schwachstellen
 4. 3 konkrete Verbesserungsvorschläge
 5. Kurze SEO- und Conversion-Einschätzung (max 2 Sätze)
 
 6. Outreach-E-Mail:
 - max 80 Wörter
 - locker & freundlich
-- personalisiert (z. B. „wir haben uns Ihre Website angeschaut“)
 - KEIN Agentur-Blabla
-- Ziel: Interesse wecken, nicht verkaufen
-- Call-to-Action: kostenloser Mini-Check / kurze Analyse anbieten
-
+- Ziel: Interesse wecken
+- Call-to-Action: kostenloser Mini-Check anbieten
 """
 
+    response = requests.post(
+        "http://localhost:11434/api/generate",
+        json={
+            "model": "llama3",
+            "prompt": prompt,
+            "stream": False
+        },
+        timeout=120
+    )
+
+    return response.json()["response"]
+
+    
     response = requests.post(
         "http://localhost:11434/api/generate",
         json={
