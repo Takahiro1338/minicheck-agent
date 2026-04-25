@@ -65,6 +65,7 @@ Wichtig für die E-Mail:
 - Ziel ist ein kostenloser Mini-Check oder Erstgespräch
 - freundlich, respektvoll und nicht zu verkäuferisch
 - maximal 120 Wörter
+"""
 
     response = requests.post(
         "http://localhost:11434/api/generate",
