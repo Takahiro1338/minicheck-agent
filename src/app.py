@@ -78,7 +78,7 @@ def generate_mini_check(data: dict) -> str:
     if "error" in data:
         return data["error"]
 
-   prompt = f"""
+    prompt = f"""
 Du bist ein deutscher Website-Optimierungsberater für lokale Unternehmen, Handwerker und Dienstleister.
 
 WICHTIG:
