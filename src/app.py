@@ -78,8 +78,18 @@ def generate_mini_check(data: dict) -> str:
     if "error" in data:
         return data["error"]
 
-    prompt = f"""
-Du bist Website-Optimierungsberater für lokale Unternehmen.
+   prompt = f"""
+Du bist ein deutscher Website-Optimierungsberater für lokale Unternehmen, Handwerker und Dienstleister.
+
+WICHTIG:
+- Antworte ausschließlich auf Deutsch.
+- Verwende keine englischen Formulierungen.
+- Schreibe professionell, klar und freundlich.
+- Nutze nur die gelieferten Website-Daten.
+- Erfinde keine Fakten.
+- Wenn etwas nicht erkennbar ist, schreibe: "Aus den ausgelesenen Daten nicht erkennbar."
+- Keine übertriebenen Versprechen.
+- Kein Fachjargon ohne kurze Erklärung.
 
 Analysiere ausschließlich diese Daten:
 
@@ -90,31 +100,52 @@ H1: {data["h1_tags"]}
 H2: {data["h2_tags"]}
 Textauszug: {data["text_excerpt"]}
 
-Erstelle einen kostenlosen Mini-Check.
-
-Regeln:
-- Keine erfundenen Fakten.
-- Wenn etwas nicht erkennbar ist, schreibe: "Aus den ausgelesenen Daten nicht erkennbar."
-- Konkret, freundlich, professionell.
-- Nicht zu lang.
+Erstelle einen kostenlosen Mini-Check auf Deutsch.
 
 Struktur:
-1. Kurze Ersteinschätzung
+
+1. Ersteinschätzung
+Schreibe 2–3 kurze Sätze zur Website.
+
 2. Positive Punkte
+Nenne 2 konkrete positive Punkte.
+
 3. Schwachstellen
+Nenne 3 konkrete Schwachstellen.
+Formuliere vorsichtig, wenn Informationen fehlen.
+
 4. Verbesserungsvorschläge
+Nenne 3 konkrete und einfach verständliche Vorschläge.
+
 5. SEO-Einschätzung
+Erkläre kurz, wie gut die Website aus den Daten heraus für Google wirkt.
+
 6. Conversion-Einschätzung
+Erkläre kurz, ob Besucher wahrscheinlich schnell verstehen, was sie tun sollen.
+
 7. Kurze Outreach-E-Mail an den Website-Besitzer
+Regeln für die E-Mail:
+- komplett auf Deutsch
+- freundlich und respektvoll
+- maximal 120 Wörter
+- nicht zu verkäuferisch
+- kein "Ich hoffe, diese E-Mail erreicht Sie gut"
+- keine erfundenen Behauptungen
+- konkrete Beobachtung aus dem Mini-Check erwähnen
+
+Gib den Mini-Check sauber formatiert mit Überschriften aus.
 """
 
     try:
         response = requests.post(
             "http://localhost:11434/api/generate",
-            json={
-                "model": "llama3",
-                "prompt": prompt,
-                "stream": False
+          json={
+             "model": "llama3",
+             "prompt": prompt,
+             "stream": False,
+             "options": {
+             "temperature": 0.2
+             }
             },
             timeout=180
         )
