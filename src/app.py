@@ -139,13 +139,13 @@ Gib den Mini-Check sauber formatiert mit Überschriften aus.
     try:
         response = requests.post(
             "http://localhost:11434/api/generate",
-          json={
-             "model": "llama3",
-             "prompt": prompt,
-             "stream": False,
-             "options": {
-             "temperature": 0.2
-             }
+            json={
+                "model": "llama3",
+                "prompt": prompt,
+                "stream": False,
+                "options": {
+                    "temperature": 0.2
+                }
             },
             timeout=180
         )
@@ -237,7 +237,7 @@ class MiniCheckApp(ctk.CTk):
 
         badge = ctk.CTkLabel(
             header,
-            text="Local Website Audit",
+            text="Lokaler Website-Check",
             fg_color="#052E1A",
             text_color=PRIMARY,
             corner_radius=999,
@@ -392,7 +392,10 @@ class MiniCheckApp(ctk.CTk):
 
         self.progress.set(0.55)
         self.result_box.delete("1.0", "end")
-        self.result_box.insert("end", "Website-Daten wurden ausgelesen.\n\nKI erstellt den Mini-Check...")
+        self.result_box.insert(
+            "end",
+            "Website-Daten wurden ausgelesen.\n\nKI erstellt den Mini-Check..."
+        )
 
         result = generate_mini_check(data)
 
